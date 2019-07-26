@@ -27,7 +27,7 @@ for index, row in data.iterrows():
         url_requested = urllib.request.urlopen(row['JIRAURL'])
         if 200 == url_requested.code:
             print("True")
-    except urllib.error.URLError as e: print('URL could not be read')
+    except urllib.error.URLError as e: print('URL ' + row['JIRAURL'] + ' could not be read')
 
     
     
