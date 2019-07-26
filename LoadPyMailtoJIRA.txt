@@ -1,0 +1,30 @@
+Python und Git installieren
+
+pip install virtualenv
+
+
+Virtualenvironment erstellen:
+virtualenv <virtualenvname>
+
+
+
+Im Directory: git init
+
+git remote add pg git://github.com/Kreidl/pymailtojira.git
+
+
+git checkout pg Mappingtable.xlsx
+
+git checkout main.py
+
+
+Dann:
+in Directory: Scripts\activate um Virtualenvironment aufzurufen
+
+
+Dann:
+Scripts\pip.exe install pymsgbox
+Scripts\pip.exe install pandas
+Scripts\pip.exe install xlrd
+Scripts\pip.exe install pywin32
+Scripts\pip.exe install jira
