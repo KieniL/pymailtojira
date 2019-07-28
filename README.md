@@ -8,3 +8,5 @@ The Application search for the label in the account and creates one jira issue f
 
 
 The Application provide a bat file (Run_Script.bat). You need to enter the Path to your python interpreter and send a shortcut from the directory where you want to click on the bat.
+
+Read HowTo for Additional Information on how to use the application.
