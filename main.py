@@ -1,28 +1,39 @@
 #import pandas for reading the xlsx File
 import pandas as pd
-#import pymsgbox for displaying a messagebox, the request to check if the URL from the mapping is available, the Handler for outlook, the time for the sleep and the custom py for jira
+#import pymsgbox for displaying a messagebox, the request to check if the URL from the mapping is available, the Handler for outlook, the time for the sleep, the custom py for jira
 import pymsgbox, urllib.request,urllib.parse,urllib.error, win32com.client, time, sys, jira_py
 
+#impot the os for creating a tempo attachment
+import os
 
 def changeMailName(mail, issue, addJIRAKeytoMailName):
     if addJIRAKeytoMailName:
         mail.Subject = str(issue) + "_" + mail.Subject
     return mail
 
+
+def fileHandler(jiraURL, jiraUSER, jirapw, issue, attachment):
+    path = os.getcwd()+ "\\" + attachment.FileName
+    attachment.SaveAsFile(path)
+    if jira_py.add_attachment(jiraURL, jiraUSER, jirapw, issue, path):
+        os.remove(path)
+        print("removed")
+    
+    
+
+#Get Arguments from Batfile
+if sys.argv:
+    iterateTimeInSeconds = int(sys.argv[1])
+    addJIRAKeytoMailName = sys.argv[2]
+    mailCounter = int(sys.argv[3])
+    desiredFolder = sys.argv[4]
+
+
 #Create a Messagebox with Yes/No
 result = pymsgbox.confirm('Shall we create JIRA Issues from Mail?', 'Outlook to JIRA', ["Yes", 'No'])
 
 #Declare the filepath to the mappingtable
 filepath = "Mappingtable.xlsx"
-#Set the Folder where the Application should search for the Labels
-desiredFolder = sys.argv[4]
-
-#Define the Time How Often The Application Should be run, (60 = 1 Minute)
-iterateTimeInSeconds = int(sys.argv[1])
-
-addJIRAKeytoMailName = sys.argv[2]
-
-mailCounter = int(sys.argv[3])
 
 #End the Script if the Selection was NO or None
 if result == 'No' or result is None:
@@ -71,6 +82,10 @@ while True:
                                         #Create JIRA Issue and clear Category if jira Issue was created
                                         new_issue = jira_py.createjiraIssue(row['JIRAURL'], row['JIRAUser'], row['JiraPW'], row['ProjectID'], message.Subject, message.Body, row['IssueType'])
                                         if new_issue:
+                                            #Add All Attacments to JIRA Issue if there are any
+                                            if message.Attachments:
+                                                for attachment in message.Attachments:
+                                                    fileHandler(row['JIRAURL'], row['JIRAUser'], row['JiraPW'], new_issue, attachment)
                                             message = changeMailName(message, new_issue, addJIRAKeytoMailName)
                                             message.Categories = ""
                                             message.save()  
