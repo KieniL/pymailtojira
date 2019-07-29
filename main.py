@@ -80,7 +80,7 @@ while True:
                                     url_requested = urllib.request.urlopen(row['JIRAURL'])
                                     if 200 == url_requested.code:
                                         #Create JIRA Issue and clear Category if jira Issue was created
-                                        new_issue = jira_py.createjiraIssue(row['JIRAURL'], row['JIRAUser'], row['JiraPW'], row['ProjectID'], message.Subject, message.Body, row['IssueType'])
+                                        new_issue = jira_py.createjiraIssue(row['JIRAURL'], row['JIRAUser'], row['JiraPW'], row['ProjectKey'], message.Subject, message.Body, row['IssueType'])
                                         if new_issue:
                                             #Add All Attacments to JIRA Issue if there are any
                                             if message.Attachments:

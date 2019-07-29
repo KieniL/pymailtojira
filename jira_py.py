@@ -12,10 +12,10 @@ def createJIRAObject(jiraURL, username, password):
     return jira
 
 #Creates a JIRA Issues and returns it
-def createjiraIssue(jiraURL, username, password, projectID, summary, description, issueTypeName):
+def createjiraIssue(jiraURL, username, password, projectKey, summary, description, issueTypeName):
     jira = createJIRAObject(jiraURL, username, password)
     issue_dict = {
-        'project': {'id': projectID},
+        'project': {'key': projectKey},
         'summary': summary,
         'description': description,
         'issuetype': {'name': issueTypeName},
