@@ -15,7 +15,7 @@ Read HowTo for Additional Information on how to use the application.
 Steps to do:
 
 Install Python
-Instal GIT
+Install GIT
 
 Modify the PathtoPythonDirectory in Run_Script.bat and in Install.bat
 
